@@ -12,35 +12,33 @@
 
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
       font-family: 'Larida Bold', sans-serif;
-      margin: 0;
-      padding: 2rem;
       background: #fff;
+      padding: 2rem;
     }
 
-    #text-input {
+    #text-box {
       font-family: inherit;
       font-size: clamp(24px, 8vw, 72px);
+      line-height: 1;
+      color: #999;
+      background: black;
       width: 100%;
       max-width: 100%;
-      text-align: center;
-      padding: 1rem;
-      border: none;
       outline: none;
-      background: black;
-      color: #999;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      max-height: 1em;
     }
   </style>
 </head>
 <body>
-  <input
-    type="text"
-    id="text-input"
-    placeholder="Larida Tester"
-    maxlength="50"
-  />
+  <div id="text-box" contenteditable="true" spellcheck="false">LARIDA</div>
 </body>
 </html>
