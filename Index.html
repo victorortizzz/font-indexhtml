@@ -22,23 +22,27 @@
       padding: 2rem;
     }
 
+    #container {
+      background: black;
+      overflow: hidden;
+      width: 100%;
+    }
+
     #text-box {
       font-family: inherit;
       font-size: clamp(24px, 8vw, 72px);
       line-height: 1;
       color: #999;
-      background: black;
-      width: 100%;
-      max-width: 100%;
-      outline: none;
       text-align: center;
+      outline: none;
       white-space: nowrap;
-      overflow: hidden;
-      max-height: 1em;
+      transform: translateY(-0.15em); /* Ajusta esto para que las mayúsculas toquen arriba */
     }
   </style>
 </head>
 <body>
-  <div id="text-box" contenteditable="true" spellcheck="false">LARIDA</div>
+  <div id="container">
+    <div id="text-box" contenteditable="true" spellcheck="false">LARIDA</div>
+  </div>
 </body>
 </html>
