@@ -10,24 +10,38 @@
       src: url('https://victorortizzz.github.io/fonts-hosting/Larida-Bold.woff') format('woff');
     }
 
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Larida Bold', sans-serif;
-      padding: 2rem;
+      margin: 0;
+      padding: 1.5rem;
       background: #fff;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      justify-content: space-between;
+      height: 100vh;
     }
 
-    input[type="text"] {
+    #text-input {
       font-family: inherit;
-      font-size: 3rem;
+      font-size: 48px;
       width: 100%;
       padding: 1rem;
       border: none;
       border-bottom: 2px solid #ccc;
       outline: none;
       background: transparent;
+      max-height: 60%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .controls {
+      padding-top: 1rem;
     }
 
     input[type="range"] {
@@ -35,8 +49,10 @@
     }
 
     label {
-      font-size: 1rem;
+      font-size: 0.875rem;
       font-family: sans-serif;
+      display: block;
+      margin-bottom: 0.5rem;
     }
   </style>
 </head>
@@ -48,15 +64,17 @@
     maxlength="30"
   />
 
-  <label for="font-size-slider">Tamaño de texto</label>
-  <input
-    type="range"
-    id="font-size-slider"
-    min="20"
-    max="100"
-    value="48"
-    oninput="adjustFontSize(this.value)"
-  />
+  <div class="controls">
+    <label for="font-size-slider">Tamaño de texto</label>
+    <input
+      type="range"
+      id="font-size-slider"
+      min="20"
+      max="100"
+      value="48"
+      oninput="adjustFontSize(this.value)"
+    />
+  </div>
 
   <script>
     function adjustFontSize(size) {
