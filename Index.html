@@ -2,84 +2,118 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tester de Larida Bold</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Type Tester</title>
   <style>
     @font-face {
       font-family: 'Larida Bold';
       src: url('https://victorortizzz.github.io/fonts-hosting/Larida-Bold.woff') format('woff');
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
     body {
-      font-family: 'Larida Bold', sans-serif;
-      margin: 0;
-      padding: 1.5rem;
-      background: #fff;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      height: 100vh;
-    }
-
-    #text-input {
-      font-family: inherit;
-      font-size: 48px;
-      width: 100%;
-      padding: 1rem;
-      border: none;
-      border-bottom: 2px solid #ccc;
-      outline: none;
-      background: transparent;
-      max-height: 60%;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
+      font-family: sans-serif;
+      background: #eee;
+      padding: 2rem;
     }
 
     .controls {
-      padding-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .controls label {
+      font-size: 0.9rem;
+    }
+
+    .tester {
+      font-family: "MiTipografia", serif;
+      font-variation-settings: "wght" 400;
+      font-size: 48px;
+      line-height: 1.2;
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
     }
 
     input[type="range"] {
-      width: 25%;
+      width: 200px;
     }
 
-    label {
-      font-size: 0.875rem;
-      display: block;
-      margin-bottom: 0.5rem;
-      font-family: inherit;
+    select, input[type="text"] {
+      font-size: 1rem;
+      padding: 0.3rem 0.6rem;
     }
   </style>
 </head>
 <body>
-  <input
-    type="text"
-    id="text-input"
-    placeholder="Larida Tester"
-    maxlength="30"
-  />
 
   <div class="controls">
-    <label for="font-size-slider">Text Size</label>
-    <input
-      type="range"
-      id="font-size-slider"
-      min="20"
-      max="70"
-      value="48"
-      oninput="adjustFontSize(this.value)"
-    />
+    <label>
+      Texto:
+      <input type="text" id="text-input" value="Tradition meets precision.">
+    </label>
+
+    <label>
+      Tamaño:
+      <input type="range" id="size-slider" min="16" max="200" value="48">
+      <span id="size-value">48</span>px
+    </label>
+
+    <label>
+      Peso:
+      <input type="range" id="weight-slider" min="1" max="1000" value="400">
+      <span id="weight-value">400</span>
+    </label>
+
+    <label>
+      Estilo:
+      <select id="preset-weight">
+        <option value="0">Variable</option>
+        <option value="300">Light</option>
+        <option value="400" selected>Regular</option>
+        <option value="600">Semibold</option>
+        <option value="700">Bold</option>
+        <option value="900">Black</option>
+      </select>
+    </label>
   </div>
 
+  <div class="tester" id="tester">Tradition meets precision.</div>
+
   <script>
-    function adjustFontSize(size) {
-      document.getElementById('text-input').style.fontSize = size + 'px';
-    }
+    const tester = document.getElementById('tester');
+    const textInput = document.getElementById('text-input');
+    const sizeSlider = document.getElementById('size-slider');
+    const weightSlider = document.getElementById('weight-slider');
+    const presetWeight = document.getElementById('preset-weight');
+    const sizeValue = document.getElementById('size-value');
+    const weightValue = document.getElementById('weight-value');
+
+    textInput.addEventListener('input', () => {
+      tester.textContent = textInput.value;
+    });
+
+    sizeSlider.addEventListener('input', () => {
+      tester.style.fontSize = ⁠ ${sizeSlider.value}px ⁠;
+      sizeValue.textContent = sizeSlider.value;
+    });
+
+    weightSlider.addEventListener('input', () => {
+      tester.style.fontVariationSettings = ⁠ "wght" ${weightSlider.value} ⁠;
+      weightValue.textContent = weightSlider.value;
+      presetWeight.value = 0; // Volver a "Variable"
+    });
+
+    presetWeight.addEventListener('change', () => {
+      const weight = presetWeight.value;
+      if (weight == 0) return; // Si selecciona "Variable", no hace nada
+      weightSlider.value = weight;
+      tester.style.fontVariationSettings = ⁠ "wght" ${weight} ⁠;
+      weightValue.textContent = weight;
+    });
   </script>
+
 </body>
 </html>
