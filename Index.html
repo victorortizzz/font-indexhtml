@@ -20,39 +20,22 @@
       padding: 1.5rem;
       background: #fff;
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      justify-content: center;
+      align-items: center;
       height: 100vh;
     }
 
     #text-input {
       font-family: inherit;
-      font-size: 48px;
+      font-size: 60vw;
       width: 100%;
+      text-align: center;
       padding: 1rem;
       border: none;
-      border-bottom: 2px solid #ccc;
       outline: none;
-      background: transparent;
-      max-height: 60%;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-
-    .controls {
-      padding-top: 1rem;
-    }
-
-    input[type="range"] {
-      width: 25%;
-    }
-
-    label {
-      font-size: 0.875rem;
-      display: block;
-      margin-bottom: 0.5rem;
-      font-family: inherit;
+      background: black;
+      color: #999;
+      max-length: 30;
     }
   </style>
 </head>
@@ -63,23 +46,5 @@
     placeholder="Larida Tester"
     maxlength="30"
   />
-
-  <div class="controls">
-    <label for="font-size-slider">Text Size</label>
-    <input
-      type="range"
-      id="font-size-slider"
-      min="20"
-      max="70"
-      value="48"
-      oninput="adjustFontSize(this.value)"
-    />
-  </div>
-
-  <script>
-    function adjustFontSize(size) {
-      document.getElementById('text-input').style.fontSize = size + 'px';
-    }
-  </script>
 </body>
 </html>
