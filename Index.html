@@ -1,36 +1,44 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Test Tipografía Larida Bold</title>
+  <title>Tester de Larida Bold</title>
   <style>
     @font-face {
       font-family: 'Larida Bold';
       src: url('https://victorortizzz.github.io/fonts-hosting/Larida-Bold.woff') format('woff');
-      font-weight: normal;
-      font-style: normal;
     }
 
     body {
       font-family: 'Larida Bold', sans-serif;
       padding: 2rem;
-      background: #fff;
     }
 
-    input {
+    textarea {
       font-family: inherit;
-      font-size: 2.5rem;
+      font-size: 3rem;
       width: 100%;
-      padding: 1rem;
+      min-height: 3.5rem;
+      resize: none;
+      overflow: hidden;
       border: 1px solid #ccc;
-      outline: none;
+      padding: 1rem;
       box-sizing: border-box;
     }
   </style>
 </head>
 <body>
-  <input type="text" placeholder="Escribe aquí para testear Larida Bold" />
+  <textarea placeholder="Escribe algo con Larida Bold…" oninput="autoResize(this)"></textarea>
+
+  <script>
+    function autoResize(textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = textarea.scrollHeight + 'px';
+    }
+
+    // Inicializa altura al cargar
+    document.querySelectorAll('textarea').forEach(autoResize);
+  </script>
 </body>
 </html>
