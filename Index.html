@@ -32,7 +32,7 @@
       display: flex;
       align-items: center;
       padding-left: 2rem;
-      font-size: 4rem;
+      font-size: 4.8rem; /* 20% más grande */
       letter-spacing: 0.03em;
     }
 
@@ -53,5 +53,29 @@
   <div id="container">
     <div id="text-box" contenteditable="true" spellcheck="false">Black Leather…</div>
   </div>
+
+  <script>
+    const allowedChars = new Set(
+      '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzÁÄÉÍÓÔÕÖÚÜÝáäéíóôõöúüýĀāĄąĆćČčĎďĒēĖėĘęĚěĢģĪīĮįĶķĹĺĻļĽľŁłŃńŅņŇňŌōŐőŔŕŖŗŘřŚśŠšŤťŪūŰűŲųŹźŻżŽž¿?!¡!-—.,:;‘’“”„'
+    );
+
+    const textBox = document.getElementById('text-box');
+
+    // Evitar caracteres no permitidos al escribir
+    textBox.addEventListener('keydown', (e) => {
+      if (e.ctrlKey || e.metaKey || e.altKey) return; // Permitir Ctrl+C, Ctrl+V, etc.
+      if (e.key.length === 1 && !allowedChars.has(e.key)) {
+        e.preventDefault();
+      }
+    });
+
+    // Limpiar el contenido pegado
+    textBox.addEventListener('paste', (e) => {
+      e.preventDefault();
+      const text = (e.clipboardData || window.clipboardData).getData('text');
+      const filtered = Array.from(text).filter(char => allowedChars.has(char)).join('');
+      document.execCommand('insertText', false, filtered);
+    });
+  </script>
 </body>
 </html>
