@@ -6,7 +6,7 @@
   <title>Black Leather</title>
   <style>
     @font-face {
-      font-family: 'Larida Black';
+      font-family: 'Larida Black 16junio';
       src: url('https://victorortizzz.github.io/fonts-hosting/Larida-Black.woff') format('woff');
     }
 
@@ -32,7 +32,7 @@
       display: flex;
       align-items: center;
       padding-left: 2rem;
-      font-size: 4.8rem; /* 20% más grande */
+      font-size: 4.8rem;
       letter-spacing: 0.03em;
     }
 
@@ -56,25 +56,55 @@
 
   <script>
     const allowedChars = new Set(
-      '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzÁÄÉÍÓÔÕÖÚÜÝáäéíóôõöúüýĀāĄąĆćČčĎďĒēĖėĘęĚěĢģĪīĮįĶķĹĺĻļĽľŁłŃńŅņŇňŌōŐőŔŕŖŗŘřŚśŠšŤťŪūŰűŲųŹźŻżŽž¿?!¡!-—.,:;‘’“”„'
+      '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzÁÄÉÍÓÔÕÖÚÜÝáäéíóôõöúüýĀāĄąĆćČčĎďĒēĖėĘęĚěĢģĪīĮįĶķĹĺĻļĽľŁłŃńŅņŇňŌōŐőŔŕŖŗŘřŚśŠšŤťŪūŰűŲųŹźŻżŽž¿?!¡!-—.,:;‘’“”„ '
     );
 
     const textBox = document.getElementById('text-box');
 
-    // Evitar caracteres no permitidos al escribir
+    // Evitar caracteres no permitidos o sobrepasar los 40 caracteres
     textBox.addEventListener('keydown', (e) => {
-      if (e.ctrlKey || e.metaKey || e.altKey) return; // Permitir Ctrl+C, Ctrl+V, etc.
-      if (e.key.length === 1 && !allowedChars.has(e.key)) {
-        e.preventDefault();
+      const text = textBox.innerText;
+
+      if (e.key === 'Enter') {
+        e.preventDefault(); // bloquear salto de línea
+        return;
+      }
+
+      if (e.ctrlKey || e.metaKey || e.altKey) return; // permitir combinaciones Ctrl/Cmd
+
+      if (e.key.length === 1) {
+        if (!allowedChars.has(e.key) || text.length >= 40) {
+          e.preventDefault();
+        }
       }
     });
 
-    // Limpiar el contenido pegado
+    // Limpiar el contenido pegado y aplicar restricciones
     textBox.addEventListener('paste', (e) => {
       e.preventDefault();
-      const text = (e.clipboardData || window.clipboardData).getData('text');
-      const filtered = Array.from(text).filter(char => allowedChars.has(char)).join('');
-      document.execCommand('insertText', false, filtered);
+      const pasted = (e.clipboardData || window.clipboardData).getData('text');
+      const clean = Array.from(pasted)
+        .filter(char => allowedChars.has(char) && char !== '\n' && char !== '\r')
+        .join('');
+      const maxLength = 40 - textBox.innerText.length;
+      document.execCommand('insertText', false, clean.slice(0, maxLength));
+    });
+
+    // Evitar que se cuelen saltos de línea por otros medios
+    textBox.addEventListener('input', () => {
+      let text = textBox.innerText.replace(/[\r\n]+/g, '');
+      if (text.length > 40) {
+        text = text.slice(0, 40);
+      }
+      textBox.innerText = text;
+
+      // Restaurar cursor al final
+      const range = document.createRange();
+      const sel = window.getSelection();
+      range.selectNodeContents(textBox);
+      range.collapse(false);
+      sel.removeAllRanges();
+      sel.addRange(range);
     });
   </script>
 </body>
