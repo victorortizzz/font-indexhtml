@@ -73,7 +73,7 @@
       if (e.ctrlKey || e.metaKey || e.altKey) return; // permitir combinaciones Ctrl/Cmd
 
       if (e.key.length === 1) {
-        if (!allowedChars.has(e.key) || text.length >= 40) {
+        if (!allowedChars.has(e.key) || text.length >= 38) {
           e.preventDefault();
         }
       }
